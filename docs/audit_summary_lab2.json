@@ -1,0 +1,36 @@
+{
+  "date": "2026-03-23",
+  "pipeline_version": "v2",
+  "total_documents": 6383,
+  "before": {
+    "empty_texts": 0,
+    "very_short_lt5w": 10,
+    "exact_duplicates": 17,
+    "mean_char_length": 1844.2,
+    "median_char_length": 1183,
+    "mean_word_count": 299.7,
+    "median_word_count": 185
+  },
+  "after": {
+    "empty_texts": 7,
+    "very_short_lt5w": 28,
+    "exact_duplicates": 1044,
+    "mean_char_length": 1263.5,
+    "median_char_length": 700,
+    "mean_word_count": 216.5,
+    "median_word_count": 117,
+    "mean_sentence_count": 13.2
+  },
+  "replacements": {
+    "urls_masked": 2,
+    "emails_masked": 13879,
+    "phones_masked": 1215,
+    "quote_lines_removed": 48397
+  },
+  "regression_tests": {
+    "idempotence": "PASS",
+    "no_empty_explosion": "PASS",
+    "empty_input_safe": "PASS"
+  },
+  "edge_cases_tested": 30
+}

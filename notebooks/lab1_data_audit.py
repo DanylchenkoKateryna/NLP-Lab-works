@@ -335,6 +335,6 @@ print()
 
 print(f"Згенеровані файли:")
 print(f"  data/raw.csv ({len(df_raw)} записів)")
-print(f"  data/processed.csv ({len(df_processed)} записів)")
+print(f"  data/processed_v1/processed.csv ({len(df_processed)} записів)")
 print(f"  data/labels.csv ({len(labels_df)} класів)")
 print()
