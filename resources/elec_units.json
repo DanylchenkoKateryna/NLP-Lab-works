@@ -1,0 +1,55 @@
+{
+  "frequency": {
+    "Hz":  {"canonical": "Hz",  "scale": 1},
+    "kHz": {"canonical": "kHz", "scale": 1e3},
+    "MHz": {"canonical": "MHz", "scale": 1e6},
+    "GHz": {"canonical": "GHz", "scale": 1e9}
+  },
+  "voltage": {
+    "µV": {"canonical": "µV", "scale": 1e-6},
+    "mV": {"canonical": "mV", "scale": 1e-3},
+    "V":  {"canonical": "V",  "scale": 1},
+    "kV": {"canonical": "kV", "scale": 1e3},
+    "MV": {"canonical": "MV", "scale": 1e6}
+  },
+  "current": {
+    "nA": {"canonical": "nA", "scale": 1e-9},
+    "µA": {"canonical": "µA", "scale": 1e-6},
+    "mA": {"canonical": "mA", "scale": 1e-3},
+    "A":  {"canonical": "A",  "scale": 1}
+  },
+  "resistance": {
+    "Ω":  {"canonical": "Ω",  "scale": 1},
+    "kΩ": {"canonical": "kΩ", "scale": 1e3},
+    "MΩ": {"canonical": "MΩ", "scale": 1e6}
+  },
+  "power": {
+    "mW": {"canonical": "mW", "scale": 1e-3},
+    "W":  {"canonical": "W",  "scale": 1},
+    "kW": {"canonical": "kW", "scale": 1e3}
+  },
+  "capacitance": {
+    "pF": {"canonical": "pF", "scale": 1e-12},
+    "nF": {"canonical": "nF", "scale": 1e-9},
+    "µF": {"canonical": "µF", "scale": 1e-6},
+    "F":  {"canonical": "F",  "scale": 1}
+  },
+  "inductance": {
+    "µH": {"canonical": "µH", "scale": 1e-6},
+    "mH": {"canonical": "mH", "scale": 1e-3},
+    "H":  {"canonical": "H",  "scale": 1}
+  },
+  "level": {
+    "dB":  {"canonical": "dB",  "scale": 1},
+    "dBm": {"canonical": "dBm", "scale": 1}
+  },
+  "data_rate": {
+    "bps":  {"canonical": "bps",  "scale": 1},
+    "kbps": {"canonical": "kbps", "scale": 1e3},
+    "Mbps": {"canonical": "Mbps", "scale": 1e6},
+    "Gbps": {"canonical": "Gbps", "scale": 1e9}
+  },
+  "speed": {
+    "rpm": {"canonical": "rpm", "scale": 1}
+  }
+}
