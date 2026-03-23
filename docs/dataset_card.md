@@ -218,8 +218,35 @@
 
 See: `docs/leakage_risk_report_lab5.md`, `docs/splits_manifest_lab5.json`.
 
+## Classification Baseline (Lab 6)
+
+**Baselines:**
+
+| Baseline | Feature extraction | Input | Test Acc | Test Macro F1 |
+|---|---|---|---|---|
+| B1 (leaky) | TF-IDF word unigrams (1,1), 20k features | `text_v2` raw | ~0.97 | ~0.97 |
+| B2 (honest) | TF-IDF word 1-2 grams (1,2), 20k features | `clean_text` (footer stripped) | ~0.79 | ~0.79 |
+
+**Features:** Word n-grams computed on `text_v2` / `clean_text` from `data/processed_v2/processed_v2.csv`.
+Both models use `LogisticRegression(C=1.0, solver='lbfgs')` via sklearn `Pipeline`.
+See notebook `notebooks/lab6_tfidf_logistic_baseline.ipynb` for exact computed values.
+
+**Key finding — template leakage:**
+62% of documents in `text_v2` contain the literal string `"Newsgroup: {class}"` appended during data collection.
+This acts as a direct label in the raw text, inflating Baseline 1 accuracy to ~97%.
+After stripping this footer (`strip_footer()` in `src/classification_baseline.py`), accuracy drops by ~18 pp to ~79%, revealing the true difficulty of the task.
+
+**Remaining risks after Lab 6:**
+
+- **Class overlap (religion):** `alt.atheism` and `soc.religion.christian` share dense overlapping theological vocabulary. TF-IDF bag-of-words features cannot separate them reliably; this is the largest error source in Baseline 2.
+- **Short texts:** Posts with fewer than ~200 characters lack sufficient TF-IDF signal; the model defaults to the majority class.
+- **Group leakage:** 87.7% of test post subjects also appear in train (thread overlap from ЛР5). A subject/thread-aware split would give a more conservative generalisation estimate.
+- **Quoted-text noise:** Although `clean_text` strips quote lines via Lab 2 preprocessing, some posts consist almost entirely of cited content, making the actual reply topic invisible to the classifier.
+
+See: `docs/audit_summary_lab6.md`, `docs/confusion_matrix_lab6.png`, `tests/error_cases_lab6.jsonl`.
+
 ---
 
 **Дата створення:** 2025-02-15
-**Версія:** 5.0 (оновлено Lab 5: 2026-03-23)
-**Автор:** [Ваше ім'я]
+**Версія:** 6.0 (оновлено Lab 6: 2026-03-23)
+**Автор:** Kateryna
