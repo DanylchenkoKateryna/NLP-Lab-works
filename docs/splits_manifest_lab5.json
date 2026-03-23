@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-03-23T17:40:18.751233Z",
+  "strategy": "stratified",
+  "seed": 42,
+  "ratios": {
+    "train": 0.8,
+    "val": 0.1,
+    "test": 0.1
+  },
+  "sizes": {
+    "train": 5132,
+    "val": 614,
+    "test": 637
+  },
+  "class_distribution": {
+    "train": {
+      "alt.atheism": 1934,
+      "soc.religion.christian": 1618,
+      "sci.electronics": 1580
+    },
+    "val": {
+      "alt.atheism": 226,
+      "sci.electronics": 201,
+      "soc.religion.christian": 187
+    },
+    "test": {
+      "alt.atheism": 245,
+      "soc.religion.christian": 198,
+      "sci.electronics": 194
+    }
+  },
+  "columns_used": {
+    "label": "label_id",
+    "id": "id"
+  },
+  "source_file": "data/processed_v2/processed_v2.csv"
+}

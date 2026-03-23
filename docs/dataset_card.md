@@ -197,8 +197,29 @@
    - Feature importance analysis
    - Error analysis (які тексти класифікуються неправильно)
 
+## Splits & Leakage (Lab 5)
+
+**Strategy:** Stratified random split 80/10/10, seed=42, duplicate-aware.
+
+| Split | Size | alt.atheism | sci.electronics | soc.religion.christian |
+|---|---|---|---|---|
+| train | 5,132 | 37.7% | 30.8% | 31.5% |
+| val | 614 | 36.8% | 32.7% | 30.5% |
+| test | 637 | 38.5% | 30.5% | 31.1% |
+
+**Leakage findings:**
+- Exact duplicate train∩test = **0** (duplicate-aware split groups identical texts to one split)
+- Near-duplicate (cosine ≥ 0.95) train∩test ≈ 35 pairs (on 500-doc sample)
+- **CRITICAL: 3,944/6,383 docs (62%) contain `"Newsgroup: {class}"` in text** — direct label leak
+- Thread/subject overlap: 87.7% of test subjects also appear in train
+- No temporal split needed (no date column)
+
+**Action required before fair model evaluation:** strip `Newsgroup:` / `document_id:` metadata footer from `text_v2`.
+
+See: `docs/leakage_risk_report_lab5.md`, `docs/splits_manifest_lab5.json`.
+
 ---
 
 **Дата створення:** 2025-02-15
-**Версія:** 2.0 (оновлено Lab 2: 2026-03-22)
+**Версія:** 5.0 (оновлено Lab 5: 2026-03-23)
 **Автор:** [Ваше ім'я]
