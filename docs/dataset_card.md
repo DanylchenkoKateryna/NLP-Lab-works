@@ -245,8 +245,42 @@ After stripping this footer (`strip_footer()` in `src/classification_baseline.py
 
 See: `docs/audit_summary_lab6.md`, `docs/confusion_matrix_lab6.png`, `tests/error_cases_lab6.jsonl`.
 
+## Topic Modeling Findings (Lab 8)
+
+### Large topics identified in the corpus
+
+| Topic | Model | Quality | Key words |
+|-------|-------|---------|-----------|
+| Electronics Hardware | LDA k=5 | Good | circuit, voltage, current, resistor, capacitor |
+| Christian Theology | LDA k=5 | Good | jesus, christ, church, bible, faith, prayer |
+| Atheism Debate | LDA k=5 | Good | atheist, religion, argue, evidence, moral, logic |
+| Generic Discourse | LDA k=5, LSA k=5 | Bad | think, know, say, people, just, make |
+| Mixed Religion (LSA) | LSA k=5 comp.0 | Bad | god, religion, believe, faith, atheist, christian |
+
+### Is the corpus homogeneous or mixed?
+
+**Mixed in vocabulary, but structured by class.** The electronics class is cleanly isolated. The two religious classes (`alt.atheism`, `soc.religion.christian`) share dense theological vocabulary and are hard to separate by topic modeling alone — only their stance differs.
+
+### Presence of noisy or template documents
+
+- ~15% of topics contain generic Usenet discourse words (`think`, `know`, `say`, `people`) that are not captured by standard English stop-words
+- Newsgroup metadata footers (`Newsgroup: {class}`) were stripped before topic modeling (label leakage artefact from Lab 5)
+- PII placeholders (`<URL>`, `<EMAIL>`, `<PHONE>`) were excluded from topic vocabulary
+
+### Is topic modeling useful for this corpus?
+
+**Partially.** LDA k=5 successfully separates electronics from both religious classes. The alt.atheism / soc.religion.christian split is incomplete — both classes discuss the same subject (religion) from opposing stances, which bag-of-words cannot encode. Topic modeling is useful for unsupervised corpus exploration and preprocessing quality validation, but not for classification.
+
+### Remaining risks
+
+- Generic discourse topics (stop-word topic) pollute all models; extended stop-word list needed
+- `alt.atheism` ↔ `soc.religion.christian` overlap requires stance-aware features beyond unigrams
+- Very short documents (<50 words) contribute noise topics
+
+See: `docs/audit_summary_lab8.md`, `docs/topic_notes_lab8.md`, `notebooks/lab8_topic_modeling_lsa_lda.ipynb`.
+
 ---
 
 **Дата створення:** 2025-02-15
-**Версія:** 6.0 (оновлено Lab 6: 2026-03-23)
+**Версія:** 7.0 (оновлено Lab 8: 2026-05-28)
 **Автор:** Kateryna
