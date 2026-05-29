@@ -370,3 +370,30 @@ See: `docs/audit_summary_lab10.md`, `docs/ner_notes_lab10.md`, `notebooks/lab10_
 **Дата створення:** 2025-02-15
 **Версія:** 9.0 (оновлено Lab 10: 2026-05-29)
 **Автор:** Kateryna
+
+
+---
+
+## Lab 11 — LLM Extraction (schema-first)
+
+**Extraction type tested**: Structured JSON extraction of 7 fields from 20 Newsgroups post fragments
+**Fields**: category (enum) | persons (array) | organizations (array) | locations (array) | dates (array) | has_question (boolean) | sentiment (enum)
+
+**Explicit vs implicit values**:
+- *Explicit*: person names, organization names, RFC-2822 dates in Usenet headers, question marks
+- *Implicit*: sentiment (must be inferred from tone), category (must be inferred from topic)
+
+**Challenging cases**:
+- Electronics component names (transistor, resistor) have no dedicated extraction field — lost information
+- Religious calendar terms ("Pentecost") appear in `dates[]` but are not standard calendar dates — normalization issue
+- Compound person names ("Pope John Paul II") can be split or partially captured
+- Category classification is implicit — LLM must infer from domain vocabulary
+
+**LLM extraction viability**: Viable for standard NER-type fields (persons, orgs, dates).
+Less reliable for: implicit sentiment, boolean detection, strict enum classification.
+
+**Schema-first pipeline result**:
+- Raw valid JSON rate: **70.0%** (14/20 before repair loop)
+- Post-repair valid JSON rate: **95.0%** (19/20 after max-1-repair)
+- Schema-first approach improved reliability by **+25pp** over raw extraction
+- One permanently unfixable case: LLM returns natural-language summary instead of JSON
