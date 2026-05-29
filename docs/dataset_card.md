@@ -279,8 +279,45 @@ See: `docs/audit_summary_lab6.md`, `docs/confusion_matrix_lab6.png`, `tests/erro
 
 See: `docs/audit_summary_lab8.md`, `docs/topic_notes_lab8.md`, `notebooks/lab8_topic_modeling_lsa_lda.ipynb`.
 
+
+---
+
+## Lab 9: Word Embeddings (Word2Vec / FastText)
+
+### Is the corpus large enough for embeddings?
+
+**Borderline.** 1.3M tokens / 18,613 vocab words (min_count=3) is sufficient for frequent words but too small for reliable embeddings of rare terms. Frequent domain words (voltage, church) produce good neighborhoods; rare words (omnipotent, scripture) require FastText subword support.
+
+### Domain terms
+
+The corpus has two well-separated domain clusters:
+- **Electronics:** voltage, circuit, resistor, ground, transistor, capacitor → coherent neighborhoods
+- **Religion:** church, resurrection, omnipotent, sin → coherent in both models
+
+### Noisy text / spelling variation
+
+Usenet text has significant morphological variability and spelling noise (believeth, scriptura, phototransistor, voltatge). FastText subword n-grams () handle this better than Word2Vec.
+
+### FastText vs Word2Vec
+
+**FastText is better** for this corpus. Key reasons:
+1. Usenet morphological variability → subwords help (scripture/scriptures/scriptural)
+2. Small corpus → rare words benefit from subword coverage
+3. W2V competitive only for frequent, well-represented words
+
+### Are embeddings useful overall?
+
+**Partially.** Electronics and religious institution clusters are genuine and potentially useful for query expansion or vocabulary exploration. Generic discourse words (believe, think, know) and metadata-contaminated tokens (atheism W2V top=) produce noisy neighborhoods. Not recommended as primary classification features — TF-IDF SVM (Lab 7) remains stronger.
+
+### Remaining risks
+
+- Newsgroup header metadata partially retained in  contaminates some embeddings (atheism → alt)
+- Corpus size limits W2V quality on rare theological/electronics vocabulary
+- Generic Usenet discourse words cannot form meaningful embeddings in any model
+
+See: , , .
 ---
 
 **Дата створення:** 2025-02-15
-**Версія:** 7.0 (оновлено Lab 8: 2026-05-28)
+**Версія:** 8.0 (оновлено Lab 9: 2026-05-29)
 **Автор:** Kateryna
