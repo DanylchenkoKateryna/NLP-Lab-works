@@ -318,6 +318,55 @@ Usenet text has significant morphological variability and spelling noise (believ
 See: , , .
 ---
 
+---
+
+## Lab 10: NER Pipeline + Hybrid Rules
+
+### Baseline model and entity types
+
+**Model**: spaCy `en_core_web_sm` v3.8.0  
+**Standard labels**: PERSON, ORG, GPE, DATE, NORP, MONEY, CARDINAL, ORDINAL, WORK_OF_ART, …
+
+Important entity types for this corpus:
+- **ELECTRONICS_COMPONENT** (domain-specific, not in spaCy) — transistor, resistor, capacitor, diode, oscilloscope, …
+- **PERSON** — religious figures (Jesus Christ, Pope John Paul II, Muhammad, …) and public intellectuals
+- **DATE** — standard calendar dates + Usenet RFC-2822 header dates
+- **ORG** — tech companies (Intel, Hewlett-Packard) and institutions (MIT Media Lab, American Atheists)
+- **GPE** — locations (Poland, Rome, Arabia)
+
+### Baseline failures on this corpus
+
+1. **All electronics components missed** — `en_core_web_sm` has no electronics training data (10/11 gold entities missed)
+2. **RFC-2822 Usenet dates** — "Thu, 15 Apr 1993 09:45:12 -0500" → only year fragment tagged
+3. **Compound religious names** — "Holy Spirit" (nothing), "John the Baptist" (split), "Pope John Paul II" (boundary)
+
+### Three hybrid rules added
+
+| Rule | Label | Method | Gold set improvement |
+|------|-------|--------|---------------------|
+| 1 | `ELECTRONICS_COMPONENT` | PhraseMatcher, 26-term vocab | 0 → 10 correct |
+| 2 | `PERSON` (religious) | PhraseMatcher, 22 names + longest-span dedup | 9 → 12 correct |
+| 3 | `DATE` (Usenet) | Regex RFC-2822, asymmetric overlap check | 6 → 9 correct |
+
+### Evaluation on 25-sentence gold set
+
+| | Baseline | Hybrid |
+|-|----------|--------|
+| Precision | 0.462 | **0.678** |
+| Recall | 0.453 | **0.755** |
+| F1 | 0.457 | **0.714** |
+
+### Remaining NER issues
+
+- Boundary errors (10): article prefix ("The Council" vs "Council"), partial number overlap
+- False positives (8): spaCy ORDINAL/CARDINAL/DATE noise on non-entity tokens
+- Missed (2): "God" (too generic), "Pentecost" (religious calendar date)
+- Type error (1): "Islam" → ORG instead of NORP
+
+See: `docs/audit_summary_lab10.md`, `docs/ner_notes_lab10.md`, `notebooks/lab10_ner_pipeline_hybrid_rules.ipynb`.
+
+---
+
 **Дата створення:** 2025-02-15
-**Версія:** 8.0 (оновлено Lab 9: 2026-05-29)
+**Версія:** 9.0 (оновлено Lab 10: 2026-05-29)
 **Автор:** Kateryna
