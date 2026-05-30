@@ -1,0 +1,4 @@
+# Lab 14 — Stateful NLP Flow
+# No additional packages required.
+# All agents and tools use Python stdlib only.
+# Python >= 3.10 required (dataclass | union syntax).
